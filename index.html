@@ -275,9 +275,12 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
   margin: 0; max-width: 18ch; font-family: var(--font-display); font-weight: 400;
   font-size: clamp(2.2rem, 5.2vw, 4.2rem); line-height: 1.02; letter-spacing: -.025em; text-wrap: balance;
 }
-.email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 36px; }
+.contact-list { margin: 36px 0 0; max-width: 46rem; border-top: 1px solid var(--ink); }
+.contact-row { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 6px 24px; align-items: center; padding-block: 16px; border-bottom: 1px solid var(--rule); }
+.contact-row dt { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); }
+.contact-row dd { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; min-width: 0; }
 .email {
-  font-family: var(--font-mono); font-size: clamp(1rem, 2.4vw, 1.375rem); text-decoration: none;
+  font-family: var(--font-mono); font-size: clamp(1rem, 2vw, 1.25rem); text-decoration: none;
   overflow-wrap: anywhere; user-select: all;
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
   transition: background-size .5s var(--ease);
@@ -335,6 +338,7 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
   .ledger li:hover { padding-inline: 0; background: transparent; }
   .ledger-date { grid-column: 1 / -1; }
   .degree { grid-template-columns: minmax(0, 1fr); }
+  .contact-row { grid-template-columns: minmax(0, 1fr); }
 }
 </style>
 </head>
@@ -370,9 +374,9 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
         <span class="line"><span class="line-inner serif" style="--i: 1">Songwae</span></span>
       </h1>
       <div class="bio">
-        <p class="load" style="--d: .45s">I'm an MPhil student in Intelligent Computing Systems at <a href="https://www.ashesi.edu.gh" target="_blank" rel="noopener">Ashesi University</a> and a Mastercard Foundation Scholar. I also work as a software engineer at Moonshot Partners, and I'm the lead engineer on a <a href="https://songwae2000.github.io/observatory-approach/" target="_blank" rel="noopener">pilot observatory</a> with the UN Group of Independent Eminent Experts on the Implementation of the Durban Declaration and Programme of Action.</p>
-        <p class="load" style="--d: .55s">Much of my work is for low-resource settings. I've fine-tuned speech recognition for four African languages, built a telemedicine platform that keeps working offline in rural Ghana, and led the team that won the Microsoft Hackathon Challenge with a multi-agent reinforcement learning study of Accra's paratransit.</p>
-        <p class="load" style="--d: .65s">I received my BSc in Computer Science from Ashesi University in 2025, with a thesis on multimodal deepfake detection. A paper I co-authored on when to switch from N-gram to neural models for African languages was accepted at the NeurIPS 2026 Africa in AI workshop.</p>
+        <p class="load" style="--d: .45s">I'm an MPhil student in Intelligent Computing Systems at <a href="https://www.ashesi.edu.gh" target="_blank" rel="noopener">Ashesi University</a> and a Mastercard Foundation Scholar. I'm also a software engineer at Moonshot Partners and lead engineer on a pilot observatory with a UN expert group for monitoring racism worldwide.</p>
+        <p class="load" style="--d: .55s">Much of my work targets low-resource settings. I've fine-tuned speech recognition for four African languages, built offline-first telemedicine for rural Ghana, and led a team of four on a multi-agent reinforcement learning study of Accra's paratransit that won the Microsoft Hackathon Challenge.</p>
+        <p class="load" style="--d: .65s">I hold a BSc in Computer Science from Ashesi (2025), with a thesis on multimodal deepfake detection. My co-authored paper on when to switch from N-gram to neural models for African languages was accepted at the NeurIPS 2026 Africa in AI workshop.</p>
       </div>
       <div class="hero-actions load" style="--d: .75s">
         <a class="btn btn--solid" href="#work">See my work
@@ -412,18 +416,15 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">2026 &rarr; Now</p>
         </header>
-        <p class="entry-lead">The pilot aims to monitor racism, racial discrimination and xenophobia worldwide without relying on governments to report on themselves. I lead engineering on the team designing the pipeline that would do it from public sources alone.</p>
+        <p class="entry-lead">A UN pilot to monitor racism, racial discrimination and xenophobia worldwide from public sources alone, without relying on state self-reporting. I lead engineering on the team designing its pipeline.</p>
         <ul class="entry-points">
-          <li>Counting reports would mostly measure press freedom and connectivity. So the design estimates what goes unreported, using capture-recapture across independent sources and a Bayesian hierarchical model in Stan, and would publish intervals, not raw counts.</li>
-          <li>Running an LLM on every document would cost too much at global scale, so we staged it. A cheap lexicon-and-embedding filter goes first, then a fine-tuned XLM-R classifier, and only what survives reaches the LLM.</li>
-          <li>Constrained decoding keeps extraction to a fixed JSON schema, so the output always parses. The model is allowed to say it doesn't know, and nothing about a country would publish until a person approves it.</li>
-          <li>Every published number would link back to the events, sources and archived snapshots behind it, so anyone can check a claim for themselves.</li>
+          <li>The design estimates unreported incidents with capture-recapture across independent sources and a Bayesian hierarchical model in Stan, so it would publish intervals instead of raw counts.</li>
+          <li>A three-stage triage cascade (cheap lexicon and embedding filter, fine-tuned XLM-R classifier, then an LLM only on what survives) is designed to keep inference cost viable at global scale.</li>
+          <li>Extraction would use constrained decoding into a fixed JSON schema with calibrated abstention, and an uncertainty-ranked human review queue would gate every country-level output.</li>
+          <li>SHA-256-hashed WARC snapshots, data lineage and a provenance service would trace every figure back to its sources.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Python</li><li>Dagster</li><li>XLM-R</li><li>Whisper</li><li>Stan</li></ul>
-          <a class="text-link" href="https://songwae2000.github.io/observatory-approach/" target="_blank" rel="noopener">Read the full design
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
-          </a>
         </div>
       </article>
 
@@ -435,11 +436,11 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">Feb 2026 &rarr; Now</p>
         </header>
-        <p class="entry-lead">I build AI features and core product for a multi-tenant SaaS platform.</p>
+        <p class="entry-lead">I build AI features and core product on a multi-tenant SaaS platform.</p>
         <ul class="entry-points">
-          <li>Built visual design search end to end. A Python CLIP and Qdrant service sits behind a Next.js 15 proxy with service-to-service auth, and results are pre-filtered by store type across 100+ studios.</li>
-          <li>Built an AI site builder across two codebases, a Next.js app and an Express/WebSocket multi-agent backend. A four-tier edit classifier sends small edits to targeted, section-anchored changes instead of refining the whole page.</li>
-          <li>Shipped customer features, including React Email notifications with delivery tracking, an S3 upload worker with retry backoff, and a print-customisation canvas that works in Safari.</li>
+          <li>Built visual design search end to end: a Python CLIP and Qdrant service behind a Next.js 15 proxy with service-to-service auth, pre-filtered by store type across 100+ studios.</li>
+          <li>Built a two-codebase AI site builder (Next.js front end, Express/WebSocket multi-agent backend). A four-tier edit classifier routes small edits to section-anchored patches instead of full-page refinement.</li>
+          <li>Shipped React Email notifications with delivery tracking, an S3 upload worker with retry backoff, and a Safari-compatible canvas print-customisation tool.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Next.js</li><li>Python</li><li>CLIP</li><li>Qdrant</li><li>Express</li><li>WebSockets</li><li>Prisma</li><li>BullMQ</li></ul>
@@ -454,11 +455,11 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">Oct 2025 &rarr; Apr 2026</p>
         </header>
-        <p class="entry-lead">I built the product data side of a shopping platform, from scraping to search.</p>
+        <p class="entry-lead">I built the product data pipeline for a shopping platform, from scraping to search.</p>
         <ul class="entry-points">
-          <li>Built a Puppeteer and Node.js scraper covering 7 e-commerce platforms, with 99% reliability on the 4 major retailers.</li>
-          <li>Wrote an NLP service in Natural.js that pulls colours, sizes and other attributes out of product listings with intent classification and entity recognition, at over 70% confidence.</li>
-          <li>Built the search on three-tier weighted relevance scoring, fuzzy brand matching and filters for 8+ entity types.</li>
+          <li>Built Puppeteer and Node.js scrapers for 7 e-commerce platforms, at 99% reliability on the 4 major retailers.</li>
+          <li>Extracted colours, sizes and other attributes from listings with intent classification and entity recognition in Natural.js, at over 70% confidence.</li>
+          <li>Built search with three-tier weighted relevance scoring, fuzzy brand matching and multi-filter extraction for 8+ entity types.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Node.js</li><li>Puppeteer</li><li>Natural.js</li></ul>
@@ -473,11 +474,11 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">Nov 2024 &rarr; Mar 2025</p>
         </header>
-        <p class="entry-lead">A telemedicine platform for rural Ghana, built to keep working when the connection drops.</p>
+        <p class="entry-lead">Telemedicine for rural Ghana, built to keep working when the connection drops.</p>
         <ul class="entry-points">
-          <li>Built it on FastAPI, React and PostgreSQL, with 60+ REST endpoints for patient registration, video consultations and mobile money payments.</li>
-          <li>Made it offline-first, a PWA with Redis caching and an event-driven design, so health workers in remote areas can carry on without internet.</li>
-          <li>Integrated Paystack mobile money, the Google Meet API and <abbr title="National Health Insurance Scheme">NHIS</abbr> insurance verification, which automated insurance-verified consultations and payments at 99% uptime.</li>
+          <li>Built 60+ REST endpoints on FastAPI and PostgreSQL, with a React front end, for patient registration, video consultations and mobile money payments.</li>
+          <li>Made it an offline-first PWA with Redis caching and an event-driven design, so health workers can keep working without internet.</li>
+          <li>Integrated Paystack mobile money, the Google Meet API and <abbr title="National Health Insurance Scheme">NHIS</abbr> insurance verification to automate insurance-verified consultations and payments at 99% uptime.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>FastAPI</li><li>React</li><li>PostgreSQL</li><li>Redis</li><li>Paystack</li></ul>
@@ -495,8 +496,8 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
             <p class="entry-date mono">Aug &rarr; Oct 2024</p>
           </header>
           <ul class="entry-points">
-            <li>Built an online library management system in React, Node.js and SQL, and deployed it on AWS.</li>
-            <li>Designed the search, borrowing and return screens, which cut user errors by 25%.</li>
+            <li>Built a library management system in React, Node.js and SQL, deployed on AWS.</li>
+            <li>Built the search, borrowing and return interfaces, cutting user errors by 25%.</li>
           </ul>
         </article>
         <article class="entry reveal">
@@ -508,9 +509,9 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
             <p class="entry-date mono">Jan 2023 &rarr; May 2025</p>
           </header>
           <ul class="entry-points">
-            <li>Wrote the backend for a food ordering system in Node.js, SQL and MongoDB.</li>
-            <li>Built authentication that came through penetration testing with no breaches.</li>
-            <li>Set up and tuned the servers, which handled 500 concurrent users without slowing down.</li>
+            <li>Built the food ordering backend in Node.js with SQL and MongoDB.</li>
+            <li>Implemented authentication that passed penetration testing with no breaches.</li>
+            <li>Set up and tuned the servers to handle 500 concurrent users without degradation.</li>
           </ul>
         </article>
       </div>
@@ -622,8 +623,8 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
     </div>
     <div class="section-body">
       <ol class="ledger" reversed>
-        <li class="reveal"><span class="ledger-date mono">Apr 2026</span><span class="ledger-title">Winner, Microsoft Hackathon Challenge</span><span class="ledger-amount mono"></span></li>
-        <li class="reveal"><span class="ledger-date mono">Jun 2025</span><span class="ledger-title">Mastercard Foundation Scholar</span><span class="ledger-amount mono"></span></li>
+        <li class="reveal"><span class="ledger-date mono">Apr 2026</span><span class="ledger-title">Winner, Microsoft Hackathon Challenge</span><span class="ledger-amount mono">$4,000</span></li>
+        <li class="reveal"><span class="ledger-date mono">Jun 2025</span><span class="ledger-title">Mastercard Foundation Scholarship</span><span class="ledger-amount mono">Fully funded, 4 years</span></li>
         <li class="reveal"><span class="ledger-date mono">Sep 2024</span><span class="ledger-title">Ashesi Health and Care Initiative Grant</span><span class="ledger-amount mono">$20,000</span></li>
         <li class="reveal"><span class="ledger-date mono">Jun 2023</span><span class="ledger-title">Winner, Ashesi Entrepreneurship Fund</span><span class="ledger-amount mono">$2,000</span></li>
         <li class="reveal"><span class="ledger-date mono">Dec 2021</span><span class="ledger-title">Winner, Ford Foundation Fund</span><span class="ledger-amount mono">$9,000</span></li>
@@ -701,10 +702,20 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
     </div>
     <div class="section-body reveal">
       <p class="contact-line">Email is the quickest way to reach me.</p>
-      <div class="email-row">
-        <a class="email" id="email" href="mailto:cajetan.songwae@ashesi.edu.gh">cajetan.songwae@ashesi.edu.gh</a>
-        <button class="btn btn--small" type="button" id="copy-email" data-copy="cajetan.songwae@ashesi.edu.gh" aria-controls="email">Copy</button>
-      </div>
+      <dl class="contact-list">
+        <div class="contact-row">
+          <dt class="mono">Email</dt>
+          <dd><a class="email" id="email-ashesi" href="mailto:songwae.cajetan@ashesi.edu.gh">songwae.cajetan@ashesi.edu.gh</a><button class="btn btn--small" type="button" data-copy="songwae.cajetan@ashesi.edu.gh" aria-controls="email-ashesi" aria-describedby="email-ashesi">Copy</button></dd>
+        </div>
+        <div class="contact-row">
+          <dt class="mono">Personal</dt>
+          <dd><a class="email" id="email-personal" href="mailto:songwae2000@gmail.com">songwae2000@gmail.com</a><button class="btn btn--small" type="button" data-copy="songwae2000@gmail.com" aria-controls="email-personal" aria-describedby="email-personal">Copy</button></dd>
+        </div>
+        <div class="contact-row">
+          <dt class="mono">Phone</dt>
+          <dd><a class="email" id="phone" href="tel:+233553084580">+233 55 308 4580</a><button class="btn btn--small" type="button" data-copy="+233553084580" aria-controls="phone" aria-describedby="phone">Copy</button></dd>
+        </div>
+      </dl>
       <div class="contact-links">
         <a class="text-link" href="https://www.linkedin.com/in/cajetan-songwae-43a699220/" target="_blank" rel="noopener">LinkedIn
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
@@ -806,28 +817,29 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
   tick();
   setInterval(tick, 15000);
 
-  const copyBtn = document.getElementById('copy-email');
-  if (copyBtn) {
-    const reset = () => setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1800);
-    const selectEmail = () => {
-      const el = document.getElementById('email');
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      copyBtn.textContent = 'Selected';
+  document.querySelectorAll('[data-copy]').forEach((btn) => {
+    const reset = () => setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+    const select = () => {
+      const el = document.getElementById(btn.getAttribute('aria-controls'));
+      if (el) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      btn.textContent = 'Selected';
       reset();
     };
-    copyBtn.addEventListener('click', () => {
-      const text = copyBtn.getAttribute('data-copy');
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-copy');
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => { copyBtn.textContent = 'Copied'; reset(); }, selectEmail);
+        navigator.clipboard.writeText(text).then(() => { btn.textContent = 'Copied'; reset(); }, select);
       } else {
-        selectEmail();
+        select();
       }
     });
-  }
+  });
 })();
 </script>
 </body>

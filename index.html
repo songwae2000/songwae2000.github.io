@@ -416,12 +416,12 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">2026 &rarr; Now</p>
         </header>
-        <p class="entry-lead">A UN pilot to monitor racism, racial discrimination and xenophobia worldwide from public sources alone, without relying on state self-reporting. I lead engineering on the team designing its pipeline.</p>
+        <p class="entry-lead">The pilot aims to monitor racism, racial discrimination and xenophobia worldwide without relying on governments to report on themselves. I lead engineering on the team designing the pipeline that would do it from public sources alone.</p>
         <ul class="entry-points">
-          <li>The design estimates unreported incidents with capture-recapture across independent sources and a Bayesian hierarchical model in Stan, so it would publish intervals instead of raw counts.</li>
-          <li>A three-stage triage cascade (cheap lexicon and embedding filter, fine-tuned XLM-R classifier, then an LLM only on what survives) is designed to keep inference cost viable at global scale.</li>
-          <li>Extraction would use constrained decoding into a fixed JSON schema with calibrated abstention, and an uncertainty-ranked human review queue would gate every country-level output.</li>
-          <li>SHA-256-hashed WARC snapshots, data lineage and a provenance service would trace every figure back to its sources.</li>
+          <li>Counting reports would mostly measure press freedom and connectivity. So the design estimates what goes unreported, using capture-recapture across independent sources and a Bayesian hierarchical model in Stan, and would publish intervals, not raw counts.</li>
+          <li>Running an LLM on every document would cost too much at global scale, so we staged it. A cheap lexicon-and-embedding filter goes first, then a fine-tuned XLM-R classifier, and only what survives reaches the LLM.</li>
+          <li>Constrained decoding keeps extraction to a fixed JSON schema, so the output always parses. The model is allowed to say it doesn't know, and nothing about a country would publish until a person approves it.</li>
+          <li>Every published number would link back to the events, sources and archived snapshots behind it, so anyone can check a claim for themselves.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Python</li><li>Dagster</li><li>XLM-R</li><li>Whisper</li><li>Stan</li></ul>
@@ -436,11 +436,11 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">Feb 2026 &rarr; Now</p>
         </header>
-        <p class="entry-lead">I build AI features and core product on a multi-tenant SaaS platform.</p>
+        <p class="entry-lead">I build AI features and core product for a multi-tenant SaaS platform.</p>
         <ul class="entry-points">
-          <li>Built visual design search end to end: a Python CLIP and Qdrant service behind a Next.js 15 proxy with service-to-service auth, pre-filtered by store type across 100+ studios.</li>
-          <li>Built a two-codebase AI site builder (Next.js front end, Express/WebSocket multi-agent backend). A four-tier edit classifier routes small edits to section-anchored patches instead of full-page refinement.</li>
-          <li>Shipped React Email notifications with delivery tracking, an S3 upload worker with retry backoff, and a Safari-compatible canvas print-customisation tool.</li>
+          <li>Built visual design search end to end. A Python CLIP and Qdrant service sits behind a Next.js 15 proxy with service-to-service auth, and results are pre-filtered by store type across 100+ studios.</li>
+          <li>Built an AI site builder across two codebases, a Next.js app and an Express/WebSocket multi-agent backend. A four-tier edit classifier sends small edits to targeted, section-anchored changes instead of refining the whole page.</li>
+          <li>Shipped customer features, including React Email notifications with delivery tracking, an S3 upload worker with retry backoff, and a print-customisation canvas that works in Safari.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Next.js</li><li>Python</li><li>CLIP</li><li>Qdrant</li><li>Express</li><li>WebSockets</li><li>Prisma</li><li>BullMQ</li></ul>
@@ -455,11 +455,11 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">Oct 2025 &rarr; Apr 2026</p>
         </header>
-        <p class="entry-lead">I built the product data pipeline for a shopping platform, from scraping to search.</p>
+        <p class="entry-lead">I built the product data side of a shopping platform, from scraping to search.</p>
         <ul class="entry-points">
-          <li>Built Puppeteer and Node.js scrapers for 7 e-commerce platforms, at 99% reliability on the 4 major retailers.</li>
-          <li>Extracted colours, sizes and other attributes from listings with intent classification and entity recognition in Natural.js, at over 70% confidence.</li>
-          <li>Built search with three-tier weighted relevance scoring, fuzzy brand matching and multi-filter extraction for 8+ entity types.</li>
+          <li>Built a Puppeteer and Node.js scraper covering 7 e-commerce platforms, with 99% reliability on the 4 major retailers.</li>
+          <li>Wrote an NLP service in Natural.js that pulls colours, sizes and other attributes out of product listings with intent classification and entity recognition, at over 70% confidence.</li>
+          <li>Built the search on three-tier weighted relevance scoring, fuzzy brand matching and filters for 8+ entity types.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Node.js</li><li>Puppeteer</li><li>Natural.js</li></ul>
@@ -474,11 +474,11 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
           </div>
           <p class="entry-date mono">Nov 2024 &rarr; Mar 2025</p>
         </header>
-        <p class="entry-lead">Telemedicine for rural Ghana, built to keep working when the connection drops.</p>
+        <p class="entry-lead">A telemedicine platform for rural Ghana, built to keep working when the connection drops.</p>
         <ul class="entry-points">
-          <li>Built 60+ REST endpoints on FastAPI and PostgreSQL, with a React front end, for patient registration, video consultations and mobile money payments.</li>
-          <li>Made it an offline-first PWA with Redis caching and an event-driven design, so health workers can keep working without internet.</li>
-          <li>Integrated Paystack mobile money, the Google Meet API and <abbr title="National Health Insurance Scheme">NHIS</abbr> insurance verification to automate insurance-verified consultations and payments at 99% uptime.</li>
+          <li>Built it on FastAPI, React and PostgreSQL, with 60+ REST endpoints for patient registration, video consultations and mobile money payments.</li>
+          <li>Made it offline-first, a PWA with Redis caching and an event-driven design, so health workers in remote areas can carry on without internet.</li>
+          <li>Integrated Paystack mobile money, the Google Meet API and <abbr title="National Health Insurance Scheme">NHIS</abbr> insurance verification, which automated insurance-verified consultations and payments at 99% uptime.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>FastAPI</li><li>React</li><li>PostgreSQL</li><li>Redis</li><li>Paystack</li></ul>
@@ -496,8 +496,8 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
             <p class="entry-date mono">Aug &rarr; Oct 2024</p>
           </header>
           <ul class="entry-points">
-            <li>Built a library management system in React, Node.js and SQL, deployed on AWS.</li>
-            <li>Built the search, borrowing and return interfaces, cutting user errors by 25%.</li>
+            <li>Built an online library management system in React, Node.js and SQL, and deployed it on AWS.</li>
+            <li>Designed the search, borrowing and return screens, which cut user errors by 25%.</li>
           </ul>
         </article>
         <article class="entry reveal">
@@ -509,9 +509,9 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
             <p class="entry-date mono">Jan 2023 &rarr; May 2025</p>
           </header>
           <ul class="entry-points">
-            <li>Built the food ordering backend in Node.js with SQL and MongoDB.</li>
-            <li>Implemented authentication that passed penetration testing with no breaches.</li>
-            <li>Set up and tuned the servers to handle 500 concurrent users without degradation.</li>
+            <li>Wrote the backend for a food ordering system in Node.js, SQL and MongoDB.</li>
+            <li>Built authentication that came through penetration testing with no breaches.</li>
+            <li>Set up and tuned the servers, which handled 500 concurrent users without slowing down.</li>
           </ul>
         </article>
       </div>

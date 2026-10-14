@@ -418,10 +418,10 @@ abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); 
         </header>
         <p class="entry-lead">The pilot aims to monitor racism, racial discrimination and xenophobia worldwide without relying on governments to report on themselves. I lead engineering on the team designing the pipeline that would do it from public sources alone.</p>
         <ul class="entry-points">
-          <li>Counting reports would mostly measure press freedom and connectivity. So the design estimates what goes unreported, using capture-recapture across independent sources and a Bayesian hierarchical model in Stan, and would publish intervals, not raw counts.</li>
-          <li>Running an LLM on every document would cost too much at global scale, so we staged it. A cheap lexicon-and-embedding filter goes first, then a fine-tuned XLM-R classifier, and only what survives reaches the LLM.</li>
-          <li>Constrained decoding keeps extraction to a fixed JSON schema, so the output always parses. The model is allowed to say it doesn't know, and nothing about a country would publish until a person approves it.</li>
-          <li>Every published number would link back to the events, sources and archived snapshots behind it, so anyone can check a claim for themselves.</li>
+          <li>Designed the estimation layer to measure what goes unreported, using capture-recapture across independent sources and a Bayesian hierarchical model in Stan, so the observatory would publish intervals instead of raw counts that mostly reflect press freedom and connectivity.</li>
+          <li>Architected a three-stage triage cascade (a cheap lexicon-and-embedding filter, then a fine-tuned XLM-R classifier, then an LLM only on what survives), so LLM costs would stay viable at global scale.</li>
+          <li>Defined the LLM extraction guardrails, with constrained decoding into a fixed JSON schema, an explicit "don't know" option and human sign-off on anything about a country, so output always parses and no country-level finding would publish unchecked.</li>
+          <li>Led the provenance design, linking every published number to the events, sources and archived snapshots behind it, so anyone could check a claim for themselves.</li>
         </ul>
         <div class="entry-foot">
           <ul class="stack mono" aria-label="Tools"><li>Python</li><li>Dagster</li><li>XLM-R</li><li>Whisper</li><li>Stan</li></ul>

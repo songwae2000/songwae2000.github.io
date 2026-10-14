@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Software engineer and ML researcher in Ghana. I build AI systems and the backends they run on.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cajetan Songwae">
+<meta property="og:description" content="Software engineer and ML researcher in Ghana. I build AI systems and the backends they run on.">
+<meta property="og:url" content="https://songwae2000.github.io/">
+<meta property="og:image" content="https://songwae2000.github.io/profile.jpg">
+<link rel="canonical" href="https://songwae2000.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-size='28' font-weight='700' fill='%23ffffff'%3ECS%3C/text%3E%3C/svg%3E">
+<title>Cajetan Songwae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Layout: a monochrome ledger. Pinned section labels on the left, entries on the right, hairlines between rows. */
+:root {
+  --paper: #ffffff;
+  --ink: #0a0a0a;
+  --ink-soft: #3f3f44;
+  --ink-mute: #66666d;
+  --rule: #e6e6e9;
+  --wash: #f5f5f6;
+
+  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1180px;
+  --nav-h: 60px;
+  color-scheme: light;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--ink); color: var(--paper); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+section[id] { scroll-margin-top: calc(var(--nav-h) + 12px); }
+abbr[title] { text-decoration: none; border-bottom: 1px dotted var(--ink-mute); cursor: help; }
+
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
+
+.skip {
+  position: absolute; left: var(--gutter); top: -60px; z-index: 100;
+  background: var(--ink); color: var(--paper); padding: 10px 14px; border-radius: 6px;
+  text-decoration: none; font-weight: 500;
+}
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 10px); }
+
+/* Scroll progress */
+.progress {
+  position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); height: 2px; z-index: 70;
+  background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none;
+}
+@keyframes grow { to { transform: scaleX(1); } }
+@supports (animation-timeline: scroll()) {
+  .progress { animation: grow linear both; animation-timeline: scroll(root); }
+}
+
+/* Navigation */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .4s var(--ease);
+  animation: drop .9s var(--ease) .1s both;
+}
+.nav.is-scrolled { border-bottom-color: var(--rule); }
+.nav-inner { height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand {
+  font-weight: 600; letter-spacing: -.02em; text-decoration: none; white-space: nowrap;
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.brand-short { display: none; }
+.js .nav:not(.show-brand) .brand { opacity: 0; transform: translateY(6px); pointer-events: none; }
+.nav-track { position: relative; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.nav-track::-webkit-scrollbar { display: none; }
+.nav-links { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(14px, 2.2vw, 30px); }
+.nav-links a {
+  display: block; padding-block: 18px; font-size: .875rem; color: var(--ink-mute);
+  text-decoration: none; white-space: nowrap; transition: color .3s var(--ease);
+}
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--ink); }
+.nav-indicator {
+  position: absolute; left: 0; bottom: 12px; height: 1.5px; width: 0; background: var(--ink);
+  opacity: 0; transition: transform .55s var(--ease), width .55s var(--ease), opacity .3s;
+}
+
+/* Hero */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  grid-template-areas: "text portrait";
+  gap: clamp(32px, 6vw, 88px); align-items: start;
+  padding-block: clamp(40px, 6vw, 88px) clamp(48px, 7vw, 96px);
+}
+.hero-text { grid-area: text; min-width: 0; }
+.eyebrow {
+  margin: 0 0 18px; font-family: var(--font-mono); font-size: .8125rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--ink-mute);
+}
+.name {
+  margin: 0; font-weight: 600; font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: .95; letter-spacing: -.045em; text-wrap: balance;
+}
+.line { display: inline-block; vertical-align: top; overflow: hidden; padding: .02em .1em .12em 0; margin-bottom: -.1em; }
+.line-inner { display: block; animation: rise 1.15s var(--ease) both; animation-delay: calc(var(--i, 0) * 110ms + 150ms); }
+.serif { font-family: var(--font-display); font-style: italic; font-weight: 400; letter-spacing: -.025em; font-size: 1.12em; }
+.bio { display: grid; gap: 1em; max-width: 44em; margin-top: 28px; }
+.bio p { margin: 0; font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+.bio p:first-child { color: var(--ink); }
+.bio a {
+  text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: .2em;
+  text-decoration-color: var(--ink-mute); transition: text-decoration-color .3s var(--ease);
+}
+.bio a:hover { text-decoration-color: var(--ink); }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; margin-top: 32px; }
+.hero-social { display: flex; gap: 20px; margin-left: 10px; }
+
+.portrait { grid-area: portrait; margin: 0; min-width: 0; padding-top: 6px; }
+.portrait-frame {
+  position: relative; overflow: hidden; aspect-ratio: 4 / 5; max-width: 100%;
+  background: var(--wash); border-radius: 2px;
+  animation: unveil 1.3s var(--ease) .35s both;
+}
+.portrait-frame img {
+  display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%;
+  animation: settle 1.8s var(--ease) .35s both;
+  transition: transform 1.2s var(--ease);
+}
+.portrait:hover .portrait-frame img { transform: scale(1.035); }
+.portrait figcaption {
+  display: flex; justify-content: space-between; gap: 12px; margin-top: 12px;
+  font-size: .75rem; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Buttons and links */
+.btn {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: .6em; height: 46px; padding-inline: 20px;
+  border: 1px solid var(--ink); border-radius: 999px;
+  font: 500 .9375rem/1 var(--font-body); color: var(--ink); background: transparent;
+  text-decoration: none; cursor: pointer; transition: color .4s var(--ease);
+}
+.btn::before {
+  content: ""; position: absolute; inset: -1px; z-index: -1; background: var(--ink);
+  transform: translateY(102%); transition: transform .5s var(--ease);
+}
+.btn:hover { color: var(--paper); }
+.btn:hover::before { transform: none; }
+.btn--solid { background: var(--ink); color: var(--paper); }
+.btn--solid::before { background: var(--paper); }
+.btn--solid:hover { color: var(--ink); }
+.btn svg, .text-link svg { width: 14px; height: 14px; flex: none; transition: transform .45s var(--ease); }
+.btn:hover svg { transform: translateY(2px); }
+
+.text-link {
+  display: inline-flex; align-items: center; gap: .4em; text-decoration: none; font-weight: 500;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  padding-bottom: 2px; transition: background-size .5s var(--ease);
+}
+.text-link:hover { background-size: 0 1px; background-position: 100% 100%; }
+.text-link:hover svg { transform: translate(3px, -3px); }
+.text-link.down:hover svg { transform: translateY(3px); }
+.text-link.up:hover svg { transform: translateY(-3px); }
+
+/* Sections */
+.section {
+  display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: clamp(24px, 5vw, 72px);
+  padding-block: clamp(56px, 8vw, 104px); border-top: 1px solid var(--rule);
+}
+.section-head { position: sticky; top: calc(var(--nav-h) + 28px); align-self: start; }
+.section-title {
+  margin: 0; font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.25rem, 4vw, 3.1rem); line-height: 1; letter-spacing: -.02em; text-wrap: balance;
+}
+.section-note { margin: 14px 0 0; font-size: .75rem; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .1em; }
+.section-body { min-width: 0; display: grid; gap: 0; }
+.sub-head {
+  margin: 48px 0 0; padding-bottom: 12px; font-family: var(--font-mono); font-weight: 500;
+  font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute);
+}
+
+/* Entries */
+.entry { padding-block: 34px; border-top: 1px solid var(--rule); }
+.section-body > .entry:first-child { padding-top: 0; border-top: 0; }
+.section-body > .sub-head:first-child { margin-top: 0; }
+.entry-org strong { color: var(--ink); font-weight: 600; }
+.pub-venue { margin: 14px 0 0; font-size: .9375rem; color: var(--ink-soft); }
+.pub-venue .tag { margin: 0 10px 0 0; vertical-align: .12em; }
+.entry-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; }
+.entry-titles { min-width: 0; }
+.entry-role { margin: 0; font-size: 1.25rem; font-weight: 600; letter-spacing: -.015em; line-height: 1.3; text-wrap: balance; }
+.entry-org { margin: 4px 0 0; color: var(--ink-soft); }
+.entry-date { margin: 0; font-size: .8125rem; color: var(--ink-mute); white-space: nowrap; transition: color .3s var(--ease); }
+.entry:hover .entry-date { color: var(--ink); }
+.entry-lead { max-width: 62ch; margin: 18px 0 0; font-size: 1.0625rem; line-height: 1.6; text-wrap: pretty; }
+.entry-points { list-style: none; max-width: 66ch; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; color: var(--ink-soft); }
+.entry-points li { position: relative; padding-left: 26px; text-wrap: pretty; }
+.entry-points li::before {
+  content: ""; position: absolute; left: 0; top: .82em; width: 12px; height: 1px; background: var(--ink);
+  transition: width .4s var(--ease);
+}
+.entry-points li:hover::before { width: 18px; }
+.entry-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 22px; }
+.stack { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; font-size: .75rem; color: var(--ink-mute); }
+.stack li + li::before { content: "/"; margin-inline: .6em; color: #b5b5bb; }
+
+.entry--feature .entry-role { font-size: clamp(1.5rem, 2.4vw, 1.9rem); letter-spacing: -.025em; }
+.entry--feature .entry-lead { font-size: clamp(1.125rem, 1.6vw, 1.25rem); }
+.tag {
+  display: inline-block; margin-left: 10px; padding: 3px 8px 2px; border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--font-mono); font-size: .625rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  vertical-align: .35em; line-height: 1.3;
+}
+.tag--solid { background: var(--ink); color: var(--paper); }
+
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; border-top: 1px solid var(--rule); }
+.pair .entry { border-top: 0; padding-top: 28px; }
+.pair .entry-role { font-size: 1.0625rem; }
+.pair .entry-points, .pair .entry-lead { font-size: .9375rem; }
+.pair .entry-lead { color: var(--ink-soft); }
+.section-body > .pair:first-child { border-top: 0; }
+.section-body > .pair:first-child .entry { padding-top: 0; }
+
+/* Awards ledger */
+.ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.ledger li {
+  display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) auto; gap: 8px 24px; align-items: baseline;
+  padding: 20px 8px; border-bottom: 1px solid var(--rule);
+  transition: background-color .4s var(--ease), padding .5s var(--ease);
+}
+.ledger li:hover { background: var(--wash); padding-left: 16px; padding-right: 16px; }
+.ledger-date { font-size: .8125rem; color: var(--ink-mute); }
+.ledger-title { font-size: 1.0625rem; font-weight: 500; letter-spacing: -.01em; }
+.ledger-amount { font-size: .9375rem; text-align: right; }
+
+/* Education */
+.degree {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 24px; align-items: baseline;
+  padding-block: 20px; border-bottom: 1px solid var(--rule);
+}
+.degree:first-child { border-top: 1px solid var(--ink); }
+.degree-name { margin: 0; font-size: 1.0625rem; font-weight: 600; letter-spacing: -.01em; }
+.degree-school { margin: 2px 0 0; color: var(--ink-soft); }
+.toolkit { margin: 0; display: grid; gap: 22px; }
+.toolkit div { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 10px 24px; align-items: start; }
+.toolkit dt { font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-mute); padding-top: 7px; }
+.toolkit dd { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.chip {
+  display: inline-block; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 999px;
+  font-size: .875rem; line-height: 1.4; transition: background-color .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+.chip:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* Contact */
+.contact-line {
+  margin: 0; max-width: 18ch; font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.2rem, 5.2vw, 4.2rem); line-height: 1.02; letter-spacing: -.025em; text-wrap: balance;
+}
+.email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 36px; }
+.email {
+  font-family: var(--font-mono); font-size: clamp(1rem, 2.4vw, 1.375rem); text-decoration: none;
+  overflow-wrap: anywhere; user-select: all;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size .5s var(--ease);
+}
+.email:hover { background-size: 100% 1px; }
+.btn--small { height: 34px; padding-inline: 14px; font-size: .8125rem; }
+.contact-links { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 28px; }
+.contact-meta { margin: 40px 0 0; font-size: .8125rem; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .08em; }
+
+.blink { animation: blink 2s steps(1) infinite; }
+
+/* Footer */
+.footer { border-top: 1px solid var(--rule); }
+.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px 40px; font-size: .875rem; color: var(--ink-mute); }
+
+/* Motion */
+@keyframes rise { from { transform: translateY(108%); } to { transform: none; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes unveil { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes settle { from { transform: scale(1.14); } to { transform: scale(1); } }
+@keyframes blink { 50% { opacity: .15; } }
+@keyframes reveal { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+.load { animation: fade-up 1s var(--ease) both; animation-delay: var(--d, 0s); }
+
+@supports (animation-timeline: view()) {
+  .reveal { animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Narrow screens */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "portrait" "text"; gap: 28px; }
+  .portrait { max-width: 220px; padding-top: 0; }
+  .section { grid-template-columns: minmax(0, 1fr); }
+  .section-head { position: static; }
+  .toolkit div { grid-template-columns: minmax(0, 1fr); }
+  .toolkit dt { padding-top: 0; }
+}
+@media (max-width: 640px) {
+  .brand-full { display: none; }
+  .brand-short { display: inline; }
+  .js .nav:not(.show-brand) .brand { opacity: 1; transform: none; pointer-events: auto; }
+  .nav-track { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+  .nav-links { padding-right: 24px; }
+  .hero-social { margin-left: 0; width: 100%; }
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .pair .entry + .entry { border-top: 1px solid var(--rule); }
+  .ledger li { grid-template-columns: minmax(0, 1fr) auto; padding-inline: 0; }
+  .ledger li:hover { padding-inline: 0; background: transparent; }
+  .ledger-date { grid-column: 1 / -1; }
+  .degree { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav" id="top">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#main"><span class="brand-full">Cajetan Songwae</span><span class="brand-short" aria-hidden="true">CS</span></a>
+    <nav class="nav-track" aria-label="Sections">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <span class="nav-indicator" aria-hidden="true"></span>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <section class="hero" id="about" aria-labelledby="hero-name">
+    <div class="hero-text">
+      <p class="eyebrow load" style="--d: .05s">Software engineer and ML researcher, Ghana</p>
+      <h1 class="name" id="hero-name">
+        <span class="line"><span class="line-inner" style="--i: 0">Cajetan</span></span>
+        <span class="line"><span class="line-inner serif" style="--i: 1">Songwae</span></span>
+      </h1>
+      <div class="bio">
+        <p class="load" style="--d: .45s">I'm an MPhil student in Intelligent Computing Systems at <a href="https://www.ashesi.edu.gh" target="_blank" rel="noopener">Ashesi University</a> and a Mastercard Foundation Scholar. I also work as a software engineer at Moonshot Partners, and I'm the lead engineer on a <a href="https://songwae2000.github.io/observatory-approach/" target="_blank" rel="noopener">pilot observatory</a> with the UN Group of Independent Eminent Experts on the Implementation of the Durban Declaration and Programme of Action.</p>
+        <p class="load" style="--d: .55s">Much of my work is for low-resource settings. I've fine-tuned speech recognition for four African languages, built a telemedicine platform that keeps working offline in rural Ghana, and led the team that won the Microsoft Hackathon Challenge with a multi-agent reinforcement learning study of Accra's paratransit.</p>
+        <p class="load" style="--d: .65s">I received my BSc in Computer Science from Ashesi University in 2025, with a thesis on multimodal deepfake detection. A paper I co-authored on when to switch from N-gram to neural models for African languages was accepted at the NeurIPS 2026 Africa in AI workshop.</p>
+      </div>
+      <div class="hero-actions load" style="--d: .75s">
+        <a class="btn btn--solid" href="#work">See my work
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2v12M3 9l5 5 5-5"/></svg>
+        </a>
+        <a class="btn" href="#contact">Get in touch</a>
+        <span class="hero-social">
+          <a class="text-link" href="https://www.linkedin.com/in/cajetan-songwae-43a699220/" target="_blank" rel="noopener">LinkedIn
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+          </a>
+          <a class="text-link" href="https://github.com/songwae2000" target="_blank" rel="noopener">GitHub
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+          </a>
+        </span>
+      </div>
+    </div>
+    <figure class="portrait">
+      <div class="portrait-frame">
+        <img src="profile.jpg" alt="Portrait of Cajetan Songwae" width="640" height="640">
+      </div>
+      <figcaption class="mono load" style="--d: 1s"><span>Berekuso, Ghana</span><span class="clock">GMT</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="section-head">
+      <h2 class="section-title" id="work-title">Work</h2>
+      <p class="section-note mono">Newest first</p>
+    </div>
+    <div class="section-body">
+
+      <article class="entry entry--feature reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Lead Engineer<span class="tag tag--solid">Latest</span></h3>
+            <p class="entry-org">Data Observatory pilot, UN Group of Independent Eminent Experts on the <abbr title="Durban Declaration and Programme of Action">DDPA</abbr></p>
+          </div>
+          <p class="entry-date mono">2026 &rarr; Now</p>
+        </header>
+        <p class="entry-lead">The pilot aims to monitor racism, racial discrimination and xenophobia worldwide without relying on governments to report on themselves. I lead engineering on the team designing the pipeline that would do it from public sources alone.</p>
+        <ul class="entry-points">
+          <li>Counting reports would mostly measure press freedom and connectivity. So the design estimates what goes unreported, using capture-recapture across independent sources and a Bayesian hierarchical model in Stan, and would publish intervals, not raw counts.</li>
+          <li>Running an LLM on every document would cost too much at global scale, so we staged it. A cheap lexicon-and-embedding filter goes first, then a fine-tuned XLM-R classifier, and only what survives reaches the LLM.</li>
+          <li>Constrained decoding keeps extraction to a fixed JSON schema, so the output always parses. The model is allowed to say it doesn't know, and nothing about a country would publish until a person approves it.</li>
+          <li>Every published number would link back to the events, sources and archived snapshots behind it, so anyone can check a claim for themselves.</li>
+        </ul>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Tools"><li>Python</li><li>Dagster</li><li>XLM-R</li><li>Whisper</li><li>Stan</li></ul>
+          <a class="text-link" href="https://songwae2000.github.io/observatory-approach/" target="_blank" rel="noopener">Read the full design
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="entry reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Software Engineer</h3>
+            <p class="entry-org">Moonshot Partners</p>
+          </div>
+          <p class="entry-date mono">Feb 2026 &rarr; Now</p>
+        </header>
+        <p class="entry-lead">I build AI features and core product for a multi-tenant SaaS platform.</p>
+        <ul class="entry-points">
+          <li>Built visual design search end to end. A Python CLIP and Qdrant service sits behind a Next.js 15 proxy with service-to-service auth, and results are pre-filtered by store type across 100+ studios.</li>
+          <li>Built an AI site builder across two codebases, a Next.js app and an Express/WebSocket multi-agent backend. A four-tier edit classifier sends small edits to targeted, section-anchored changes instead of refining the whole page.</li>
+          <li>Shipped customer features, including React Email notifications with delivery tracking, an S3 upload worker with retry backoff, and a print-customisation canvas that works in Safari.</li>
+        </ul>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Tools"><li>Next.js</li><li>Python</li><li>CLIP</li><li>Qdrant</li><li>Express</li><li>WebSockets</li><li>Prisma</li><li>BullMQ</li></ul>
+        </div>
+      </article>
+
+      <article class="entry reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Backend Engineer</h3>
+            <p class="entry-org">Oddys</p>
+          </div>
+          <p class="entry-date mono">Oct 2025 &rarr; Apr 2026</p>
+        </header>
+        <p class="entry-lead">I built the product data side of a shopping platform, from scraping to search.</p>
+        <ul class="entry-points">
+          <li>Built a Puppeteer and Node.js scraper covering 7 e-commerce platforms, with 99% reliability on the 4 major retailers.</li>
+          <li>Wrote an NLP service in Natural.js that pulls colours, sizes and other attributes out of product listings with intent classification and entity recognition, at over 70% confidence.</li>
+          <li>Built the search on three-tier weighted relevance scoring, fuzzy brand matching and filters for 8+ entity types.</li>
+        </ul>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Tools"><li>Node.js</li><li>Puppeteer</li><li>Natural.js</li></ul>
+        </div>
+      </article>
+
+      <article class="entry reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Software Engineer</h3>
+            <p class="entry-org">WADA</p>
+          </div>
+          <p class="entry-date mono">Nov 2024 &rarr; Mar 2025</p>
+        </header>
+        <p class="entry-lead">A telemedicine platform for rural Ghana, built to keep working when the connection drops.</p>
+        <ul class="entry-points">
+          <li>Built it on FastAPI, React and PostgreSQL, with 60+ REST endpoints for patient registration, video consultations and mobile money payments.</li>
+          <li>Made it offline-first, a PWA with Redis caching and an event-driven design, so health workers in remote areas can carry on without internet.</li>
+          <li>Integrated Paystack mobile money, the Google Meet API and <abbr title="National Health Insurance Scheme">NHIS</abbr> insurance verification, which automated insurance-verified consultations and payments at 99% uptime.</li>
+        </ul>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Tools"><li>FastAPI</li><li>React</li><li>PostgreSQL</li><li>Redis</li><li>Paystack</li></ul>
+        </div>
+      </article>
+
+      <h3 class="sub-head reveal">Internships</h3>
+      <div class="pair">
+        <article class="entry reveal">
+          <header class="entry-head">
+            <div class="entry-titles">
+              <h4 class="entry-role">Software Engineering Intern</h4>
+              <p class="entry-org">Ghana Library Authority</p>
+            </div>
+            <p class="entry-date mono">Aug &rarr; Oct 2024</p>
+          </header>
+          <ul class="entry-points">
+            <li>Built an online library management system in React, Node.js and SQL, and deployed it on AWS.</li>
+            <li>Designed the search, borrowing and return screens, which cut user errors by 25%.</li>
+          </ul>
+        </article>
+        <article class="entry reveal">
+          <header class="entry-head">
+            <div class="entry-titles">
+              <h4 class="entry-role">Software Engineering Intern</h4>
+              <p class="entry-org">Patatte</p>
+            </div>
+            <p class="entry-date mono">Jan 2023 &rarr; May 2025</p>
+          </header>
+          <ul class="entry-points">
+            <li>Wrote the backend for a food ordering system in Node.js, SQL and MongoDB.</li>
+            <li>Built authentication that came through penetration testing with no breaches.</li>
+            <li>Set up and tuned the servers, which handled 500 concurrent users without slowing down.</li>
+          </ul>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="research" aria-labelledby="research-title">
+    <div class="section-head">
+      <h2 class="section-title" id="research-title">Research</h2>
+      <p class="section-note mono">Papers and projects</p>
+    </div>
+    <div class="section-body">
+
+      <h3 class="sub-head reveal">Publications</h3>
+      <article class="entry reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h4 class="entry-role">N-grams vs. Neural Models for Low-Resource African Languages: When to Switch?</h4>
+            <p class="entry-org">Nana Sam Yeboah, <strong>Cajetan Songwae</strong>, Dennis Asamoah Owusu</p>
+          </div>
+          <p class="entry-date mono">2026</p>
+        </header>
+        <p class="pub-venue"><span class="tag tag--solid">Accepted</span>NeurIPS 2026 Workshop: Africa in AI</p>
+        <p class="entry-lead">We compared N-gram models with fine-tuned XLM-R, AfroXLMR and small from-scratch Transformers on MasakhaNEWS, AfriSenti and SIB-200, across up to ten languages from four language families. Whether neural models win depends on how well a language is covered in pretraining, not its language family. A Platt-scaled hybrid of N-gram and neural predictions improves on both for most languages, at no extra training cost.</p>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Methods"><li>Character N-grams</li><li>Linear SVM</li><li>XLM-R</li><li>AfroXLMR</li><li>Platt scaling</li></ul>
+        </div>
+      </article>
+
+      <h3 class="sub-head reveal">Projects</h3>
+      <article class="entry entry--feature reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Microsoft Hackathon Challenge<span class="tag">Winner</span></h3>
+            <p class="entry-org">Lead AI Researcher</p>
+          </div>
+          <p class="entry-date mono">Feb &rarr; Apr 2026</p>
+        </header>
+        <p class="entry-lead">I led a team of four studying how coordinated intersections could speed up journeys on Accra's paratransit network.</p>
+        <ul class="entry-points">
+          <li>Built a modular simulation framework, which pointed to a theoretical 20 to 25% cut in peak journey times.</li>
+          <li>Engineered a cooperative multi-agent reinforcement learning architecture in SUMO and NVIDIA Omniverse to validate autonomous intersection coordination.</li>
+          <li>Designed a theoretical deployment stack for low-resource settings, with NVIDIA Jetson for perception and a USSD and mobile money layer to simulate driver incentives.</li>
+        </ul>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Tools"><li>Multi-agent RL</li><li>SUMO</li><li>NVIDIA Omniverse</li><li>Jetson</li></ul>
+        </div>
+      </article>
+
+      <article class="entry reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Speech recognition for African languages</h3>
+            <p class="entry-org">Machine Learning Engineer</p>
+          </div>
+          <p class="entry-date mono">Aug &rarr; Oct 2025</p>
+        </header>
+        <ul class="entry-points">
+          <li>Fine-tuned Distil-Whisper on four African languages. A streaming architecture cut memory use by 75%.</li>
+          <li>Built an automated training and evaluation pipeline over 6,000+ audio samples, reaching 12% <abbr title="word error rate">WER</abbr> on the multilingual test set.</li>
+          <li>Served the model as a Flask REST API that transcribes in real time with 400 ms responses.</li>
+        </ul>
+        <div class="entry-foot">
+          <ul class="stack mono" aria-label="Tools"><li>Distil-Whisper</li><li>Python</li><li>Flask</li></ul>
+        </div>
+      </article>
+
+      <article class="entry reveal">
+        <header class="entry-head">
+          <div class="entry-titles">
+            <h3 class="entry-role">Undergraduate thesis</h3>
+            <p class="entry-org">Cross-Modal Transformer with Spatio-Temporal and Audio Fusion</p>
+          </div>
+          <p class="entry-date mono">Dec 2024 &rarr; May 2025</p>
+        </header>
+        <p class="entry-lead">A deepfake detector that checks how a video looks, how it moves and how it sounds.</p>
+        <ul class="entry-points">
+          <li>Designed a three-stream architecture joined by cross-modal transformers and selective attention fusion, which made it more robust across datasets.</li>
+          <li>Reached 98.8% accuracy on the 1M-Deepfakes Detection dataset.</li>
+        </ul>
+      </article>
+
+      <h3 class="sub-head reveal">Earlier projects</h3>
+      <div class="pair">
+        <article class="entry reveal">
+          <header class="entry-head">
+            <div class="entry-titles"><h4 class="entry-role">32-bit single-cycle CPU</h4></div>
+            <p class="entry-date mono">Jan &rarr; Apr 2024</p>
+          </header>
+          <p class="entry-lead">Designed a 32-bit CPU in VHDL, including the ALU, control unit, register file and memory interface, and verified it in Vivado.</p>
+        </article>
+        <article class="entry reveal">
+          <header class="entry-head">
+            <div class="entry-titles"><h4 class="entry-role">Car tracking and speed detection</h4></div>
+            <p class="entry-date mono">Aug &rarr; Oct 2023</p>
+          </header>
+          <p class="entry-lead">Trained a YOLOv8 model that spots speeding cars with 95% accuracy. It runs in a Flask app where you upload a video and watch detections stream back in under 200 ms in testing.</p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="awards" aria-labelledby="awards-title">
+    <div class="section-head">
+      <h2 class="section-title" id="awards-title">Awards</h2>
+      <p class="section-note mono">And grants</p>
+    </div>
+    <div class="section-body">
+      <ol class="ledger" reversed>
+        <li class="reveal"><span class="ledger-date mono">Apr 2026</span><span class="ledger-title">Winner, Microsoft Hackathon Challenge</span><span class="ledger-amount mono"></span></li>
+        <li class="reveal"><span class="ledger-date mono">Jun 2025</span><span class="ledger-title">Mastercard Foundation Scholar</span><span class="ledger-amount mono"></span></li>
+        <li class="reveal"><span class="ledger-date mono">Sep 2024</span><span class="ledger-title">Ashesi Health and Care Initiative Grant</span><span class="ledger-amount mono">$20,000</span></li>
+        <li class="reveal"><span class="ledger-date mono">Jun 2023</span><span class="ledger-title">Winner, Ashesi Entrepreneurship Fund</span><span class="ledger-amount mono">$2,000</span></li>
+        <li class="reveal"><span class="ledger-date mono">Dec 2021</span><span class="ledger-title">Winner, Ford Foundation Fund</span><span class="ledger-amount mono">$9,000</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="community" aria-labelledby="community-title">
+    <div class="section-head">
+      <h2 class="section-title" id="community-title">Community</h2>
+    </div>
+    <div class="section-body">
+      <div class="pair">
+        <article class="entry reveal">
+          <header class="entry-head">
+            <div class="entry-titles">
+              <h3 class="entry-role">IT Access</h3>
+              <p class="entry-org">Co-founder and CEO</p>
+            </div>
+            <p class="entry-date mono">2022 &rarr; 2025</p>
+          </header>
+          <p class="entry-lead">We taught Python to more than 800 young people and inspired 500 of them to pursue careers in computer science. I wrote the curriculum, which raised enrolment in advanced coding courses by 60%, and built partnerships with schools and tech organisations that grew our reach by 40%.</p>
+        </article>
+        <article class="entry reveal">
+          <header class="entry-head">
+            <div class="entry-titles">
+              <h3 class="entry-role">Light Farms and Innovations</h3>
+              <p class="entry-org">Founder and CEO</p>
+            </div>
+            <p class="entry-date mono">2021 &rarr; Now</p>
+          </header>
+          <p class="entry-lead">We grow moringa on two acres to supply our own food supplement facility. We've given more than 100 kg of moringa powder to underprivileged communities, and trained 20 smallholder farmers to start moringa farms of their own and earn an income.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="education" aria-labelledby="education-title">
+    <div class="section-head">
+      <h2 class="section-title" id="education-title">Education</h2>
+      <p class="section-note mono">And toolkit</p>
+    </div>
+    <div class="section-body">
+      <div class="reveal">
+        <div class="degree">
+          <div>
+            <h3 class="degree-name">MPhil, Intelligent Computing Systems</h3>
+            <p class="degree-school">Ashesi University</p>
+          </div>
+          <p class="entry-date mono">Sep 2025 &rarr; Jun 2027</p>
+        </div>
+        <div class="degree">
+          <div>
+            <h3 class="degree-name">BSc, Computer Science</h3>
+            <p class="degree-school">Ashesi University</p>
+          </div>
+          <p class="entry-date mono">Sep 2021 &rarr; Jun 2025</p>
+        </div>
+      </div>
+
+      <h3 class="sub-head reveal">Toolkit</h3>
+      <dl class="toolkit reveal">
+        <div><dt>Languages</dt><dd><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">SQL</span><span class="chip">PHP</span><span class="chip">VHDL</span><span class="chip">MIPS assembly</span></dd></div>
+        <div><dt>Machine learning</dt><dd><span class="chip">TensorFlow</span><span class="chip">Whisper</span><span class="chip">CLIP</span><span class="chip">YOLOv8</span><span class="chip">Natural.js</span><span class="chip">Qdrant</span></dd></div>
+        <div><dt>Web and backend</dt><dd><span class="chip">Next.js</span><span class="chip">React</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Prisma</span><span class="chip">BullMQ</span></dd></div>
+        <div><dt>Data and infrastructure</dt><dd><span class="chip">PostgreSQL</span><span class="chip">MongoDB</span><span class="chip">Redis</span><span class="chip">AWS</span><span class="chip">S3</span><span class="chip">WebSockets</span></dd></div>
+        <div><dt>Simulation and hardware</dt><dd><span class="chip">SUMO</span><span class="chip">NVIDIA Omniverse</span><span class="chip">Vivado</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="section-head">
+      <h2 class="section-title" id="contact-title">Contact</h2>
+    </div>
+    <div class="section-body reveal">
+      <p class="contact-line">Email is the quickest way to reach me.</p>
+      <div class="email-row">
+        <a class="email" id="email" href="mailto:cajetan.songwae@ashesi.edu.gh">cajetan.songwae@ashesi.edu.gh</a>
+        <button class="btn btn--small" type="button" id="copy-email" data-copy="cajetan.songwae@ashesi.edu.gh" aria-controls="email">Copy</button>
+      </div>
+      <div class="contact-links">
+        <a class="text-link" href="https://www.linkedin.com/in/cajetan-songwae-43a699220/" target="_blank" rel="noopener">LinkedIn
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+        </a>
+        <a class="text-link" href="https://github.com/songwae2000" target="_blank" rel="noopener">GitHub
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+        </a>
+      </div>
+      <p class="contact-meta mono">Based in Berekuso, Ghana &middot; <span class="clock">GMT</span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>Cajetan Songwae, 2026</span>
+    <a class="text-link up" href="#main">Back to top
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 14V2M3 7l5-5 5 5"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  root.classList.add('js');
+
+  const nav = document.querySelector('.nav');
+  const bar = document.querySelector('.progress');
+  const cssProgress = window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()');
+  let ticking = false;
+  const onScroll = () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (!cssProgress && bar) {
+      const max = root.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
+    }
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  const name = document.getElementById('hero-name');
+  if ('IntersectionObserver' in window && name) {
+    new IntersectionObserver(([e]) => nav.classList.toggle('show-brand', !e.isIntersecting), {
+      rootMargin: '-60px 0px 0px 0px'
+    }).observe(name);
+  } else {
+    nav.classList.add('show-brand');
+  }
+
+  const track = document.querySelector('.nav-track');
+  const links = Array.from(document.querySelectorAll('.nav-links a'));
+  const indicator = document.querySelector('.nav-indicator');
+  let current = null;
+  const setActive = (link) => {
+    current = link;
+    links.forEach((l) => l === link ? l.setAttribute('aria-current', 'location') : l.removeAttribute('aria-current'));
+    if (!link) { indicator.style.opacity = '0'; return; }
+    indicator.style.opacity = '1';
+    indicator.style.width = link.offsetWidth + 'px';
+    indicator.style.transform = 'translateX(' + link.offsetLeft + 'px)';
+    if (track.scrollWidth > track.clientWidth) {
+      track.scrollTo({ left: link.offsetLeft - 16, behavior: 'smooth' });
+    }
+  };
+  if ('IntersectionObserver' in window) {
+    const byId = new Map(links.map((l) => [l.getAttribute('href').slice(1), l]));
+    const visible = new Set();
+    const order = links.map((l) => l.getAttribute('href').slice(1));
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id));
+      const id = order.find((x) => visible.has(x));
+      setActive(id ? byId.get(id) : null);
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    order.forEach((id) => { const s = document.getElementById(id); if (s) spy.observe(s); });
+  }
+  window.addEventListener('resize', () => { if (current) setActive(current); });
+
+  const clocks = document.querySelectorAll('.clock');
+  let fmt = null;
+  try {
+    fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Accra', hour: '2-digit', minute: '2-digit', hour12: false });
+  } catch (err) { fmt = null; }
+  const tick = () => {
+    if (!fmt) return;
+    const parts = fmt.format(new Date()).split(':');
+    clocks.forEach((c) => {
+      c.textContent = '';
+      const colon = document.createElement('span');
+      colon.className = 'blink';
+      colon.textContent = ':';
+      c.append(parts[0], colon, parts[1] + ' GMT');
+    });
+  };
+  tick();
+  setInterval(tick, 15000);
+
+  const copyBtn = document.getElementById('copy-email');
+  if (copyBtn) {
+    const reset = () => setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1800);
+    const selectEmail = () => {
+      const el = document.getElementById('email');
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = 'Selected';
+      reset();
+    };
+    copyBtn.addEventListener('click', () => {
+      const text = copyBtn.getAttribute('data-copy');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => { copyBtn.textContent = 'Copied'; reset(); }, selectEmail);
+      } else {
+        selectEmail();
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
